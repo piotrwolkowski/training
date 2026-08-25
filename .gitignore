@@ -1,0 +1,28 @@
+# ─── Personal instance data — never committed ────────────────────────────
+#
+# This repo tracks the SYSTEM: the glossary, the decisions, the exercise
+# catalogue and the validator. Your body, your numbers and your training
+# history stay on your machine. See README.md for the split.
+
+profile/*
+!profile/*.example.md
+!profile/*.example.yaml
+
+logs/*
+!logs/.gitkeep
+!logs/README.md
+
+programme/*
+!programme/README.md
+
+reviews/*
+!reviews/.gitkeep
+!reviews/README.md
+
+cards/*
+!cards/README.md
+
+# ─── Housekeeping ────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+.DS_Store

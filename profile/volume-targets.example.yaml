@@ -1,0 +1,42 @@
+# Copy this to volume-targets.yaml and adjust. That file is gitignored.
+
+# Hard sets per muscle per week, and exposures per week.
+#
+# These are NOT the generic 10-20 sets/muscle figure from the hypertrophy literature. That
+# figure assumes a training budget this programme does not have: 12 muscles x 10-20 sets is
+# 120-240 hard sets per week, and four 30-40 minute gym sessions yield roughly 56.
+#
+# So the budget is allocated rather than wished for. Large muscles and the anchor patterns get
+# the most; smaller muscles that also receive substantial indirect work get less. Secondary
+# involvement counts as half a set, which is why presses contribute to triceps and pull-ups
+# to biceps.
+#
+# Raising a band here means lowering another. That is the point - it forces the trade-off to be
+# explicit instead of arriving as fatigue.
+
+exposures: 2
+
+muscles:
+  quads:       [10, 16]
+  hamstrings:  [ 8, 14]
+  glutes:      [ 8, 16]
+  chest:       [ 8, 14]
+  lats:        [ 8, 14]
+  mid-back:    [ 8, 14]
+  side-delt:   [ 6, 12]
+  rear-delt:   [ 5, 12]
+  biceps:      [ 6, 12]
+  triceps:     [ 6, 12]
+  calves:      [ 5, 12]
+  front-delt:  [ 4, 10]
+  core:        [ 4, 10]
+
+# Muscles that receive only incidental work and are not budgeted or reported against a band.
+untracked:
+  - adductors
+  - forearms
+  - traps
+  - hip-flexors
+  - external-rotators
+  - lower-back
+  - cardiovascular
