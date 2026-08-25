@@ -17,6 +17,8 @@ Where a session happens, and therefore what equipment is available. Two values:
 
 - **gym** — mid-to-well equipped: barbells, dumbbells, kettlebells, machines, cables.
 - **home** — 16 kg and 20 kg kettlebells, and a skipping rope.
+- **gym-limited** — a gym with partial equipment. Anchors may or may not be possible; check
+  before assuming.
 - **mat** — grappling or martial arts training. Not a lifting venue; carries no anchors and no
   hard sets, but counts fully toward training load.
 
@@ -131,6 +133,19 @@ A property of an exercise: how much it depletes grip and forearms. `high`, `mode
 Grip is a shared, slowly-recovering resource, and it is the resource grappling depletes most.
 Grip demand exists so that sessions can be scheduled around mat work without having to reason
 about it session by session.
+
+## Droppable session
+
+A session deliberately designed so that missing it costs nothing: low systemic load, no anchor,
+no movement that another session depends on.
+
+It exists because a schedule with no planned rest day still needs somewhere for the rest to come
+from. Rather than protecting a rest day that life will overwrite anyway, one session is made
+cheap enough to lose. The rest day is then whichever day gets interrupted.
+
+The trade is real and worth stating: unplanned rest lands wherever life puts it, which may be
+after the hardest session rather than before it. A droppable session manages that; it does not
+eliminate it. If a fortnight passes with nothing missed, one should be taken deliberately.
 
 ## Double day
 
