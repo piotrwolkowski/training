@@ -5,7 +5,7 @@ pattern: squat
 primary: [quads, glutes]
 secondary: [hamstrings]
 venue: [gym]
-loads_elbow: false
+loads_joints: [knee, hip]
 grip_demand: high
 unilateral: true
 load_increment_kg: 2.0

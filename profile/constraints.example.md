@@ -20,9 +20,10 @@ Then write **rules**, in the imperative, that a programme can be checked against
 2. Which anchor variants are permitted — an anchor is loaded progressively for months, so this is
    the highest-cost decision here.
 3. Where warm-up ramps are mandatory.
-4. **Which exercises may never go to failure.** Mark these `loads_elbow: true` (or add an
-   equivalent flag) in the catalogue so `scripts/weekly_volume.py` enforces it mechanically rather
-   than relying on memory. See [ADR 0003](../docs/adr/0003-exercise-catalogue-as-registry.md).
+4. **How hard the affected joint may be pushed.** This is not prose — put it in
+   `joint-constraints.yaml`, where the validator enforces it. Every exercise already declares
+   which joints it loads, so a `min_rir` floor and an `avoid` list are all that is needed. See
+   [ADR 0004](../docs/adr/0004-joint-constraints-as-a-two-sided-model.md).
 
 ---
 

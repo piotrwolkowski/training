@@ -5,7 +5,7 @@ pattern: isolation
 primary: [core]
 secondary: [hip-flexors]
 venue: [gym]
-loads_elbow: false
+loads_joints: [shoulder]
 grip_demand: high
 unilateral: false
 load_increment_kg: 0.0

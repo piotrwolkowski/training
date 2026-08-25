@@ -5,7 +5,7 @@ pattern: horizontal-pull
 primary: [mid-back]
 secondary: [lats, biceps]
 venue: [gym, home]
-loads_elbow: false
+loads_joints: [elbow, shoulder, lower-back]
 grip_demand: high
 unilateral: true
 load_increment_kg: 4.0

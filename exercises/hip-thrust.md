@@ -5,7 +5,7 @@ pattern: hinge
 primary: [glutes]
 secondary: [hamstrings]
 venue: [gym]
-loads_elbow: false
+loads_joints: [hip]
 grip_demand: low
 unilateral: false
 load_increment_kg: 5.0

@@ -5,7 +5,7 @@ pattern: vertical-pull
 primary: [lats]
 secondary: [biceps]
 venue: [gym]
-loads_elbow: false
+loads_joints: [elbow, shoulder]
 grip_demand: low
 unilateral: false
 load_increment_kg: 2.5

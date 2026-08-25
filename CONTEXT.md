@@ -126,6 +126,22 @@ the next session is simply the next one in the cycle.
 A subjective 1–5 rating of how prepared the body feels before a session, recorded at logging
 time. Deliberately coarse and deliberately subjective.
 
+## Joint constraint
+
+A limitation on how hard a particular joint may be worked, belonging to a **person**, not to an
+exercise.
+
+Expressed as a floor on **RIR** — the lowest intensity permitted on any exercise loading that
+joint — and optionally a list of movements not to be prescribed at all.
+
+It is deliberately separate from the exercises themselves. Which joints an exercise loads is an
+objective property, true for everyone. Which joints need protecting is personal. Keeping them
+apart is what lets the same catalogue serve an athlete with an elbow problem and one with a knee
+problem, and it is what makes the rule enforceable by a script rather than by memory.
+
+A joint constraint caps *intensity*. It says nothing about range of motion, tempo or grip
+position, which are often what actually determines whether a movement hurts — those stay in prose.
+
 ## Grip demand
 
 A property of an exercise: how much it depletes grip and forearms. `high`, `moderate` or `low`.

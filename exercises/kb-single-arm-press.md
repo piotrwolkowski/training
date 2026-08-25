@@ -5,7 +5,7 @@ pattern: vertical-push
 primary: [front-delt]
 secondary: [triceps, core]
 venue: [gym, home]
-loads_elbow: true
+loads_joints: [elbow, shoulder]
 grip_demand: moderate
 unilateral: true
 load_increment_kg: 4.0
@@ -15,4 +15,4 @@ failure_allowed: false
 
 # Kettlebell single-arm press
 
-loads_elbow - never to failure. Reps per arm.
+Loads the elbow - failure permitted only if the athlete profile allows it. Reps per arm.

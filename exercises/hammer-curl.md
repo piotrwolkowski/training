@@ -5,7 +5,7 @@ pattern: isolation
 primary: [biceps]
 secondary: [forearms]
 venue: [gym]
-loads_elbow: false
+loads_joints: [elbow]
 grip_demand: moderate
 unilateral: false
 load_increment_kg: 1.0

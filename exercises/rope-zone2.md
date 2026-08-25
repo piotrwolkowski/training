@@ -5,7 +5,7 @@ pattern: conditioning
 primary: [cardiovascular]
 secondary: [calves]
 venue: [gym, home]
-loads_elbow: false
+loads_joints: [knee]
 grip_demand: low
 unilateral: false
 load_increment_kg: 0.0

@@ -59,13 +59,26 @@ format, so a fresh clone is self-explanatory rather than a set of empty folders.
 ## Getting started
 
 ```bash
-cp profile/athlete.example.md        profile/athlete.md
-cp profile/constraints.example.md    profile/constraints.md
-cp profile/volume-targets.example.yaml profile/volume-targets.yaml
+cp profile/athlete.example.md           profile/athlete.md
+cp profile/constraints.example.md       profile/constraints.md
+cp profile/volume-targets.example.yaml  profile/volume-targets.yaml
+cp profile/joint-constraints.example.yaml profile/joint-constraints.yaml
 ```
 
-Fill those in — they're gitignored. `constraints.md` matters most: it is where injuries become
-**rules a programme can be checked against**, rather than things someone has to remember.
+Fill those in — they're gitignored. **`joint-constraints.yaml` matters most.** It is where an
+injury stops being something a planner has to remember and becomes something a script enforces:
+
+```yaml
+constraints:
+  knee:
+    reason: Patellar tendinopathy; painful at depth under load.
+    min_rir: 2              # never closer than 2 reps from failure
+    avoid: [leg-extension]  # never prescribed at all
+```
+
+Every exercise already declares which joints it loads, so a knee, back, shoulder or elbow
+limitation needs no other change — see
+[ADR 0004](./docs/adr/0004-joint-constraints-as-a-two-sided-model.md).
 
 Then ask the agent to build a first mesocycle. It will need your available days, session length,
 equipment per venue, and any joint limitations.
@@ -82,8 +95,9 @@ Not a convenience script. Because markdown files are the source of truth, this *
 validator, and it exits non-zero on failure. It:
 
 - rejects logs referencing an exercise not in the catalogue, or with malformed front-matter;
-- **enforces joint constraints mechanically** — anything flagged `loads_elbow: true` recorded at
-  RIR 0 is a violation, so safety is a checkable property rather than a remembered one;
+- **enforces joint constraints mechanically** — each exercise declares the joints it loads, your
+  profile declares which of yours need protecting and how hard they may be pushed, and the script
+  joins the two. Safety becomes a checkable property rather than a remembered one;
 - reports hard sets and exposures per muscle per week against your volume targets, counting
   secondary involvement as half a set.
 
@@ -123,12 +137,21 @@ Recorded in [`docs/adr/`](./docs/adr/), with the alternatives that were rejected
 1. [Markdown with YAML front-matter is the source of truth](./docs/adr/0001-markdown-yaml-as-source-of-truth.md)
 2. [Fixed anchors, variable everything else](./docs/adr/0002-fixed-anchors-themed-mesocycles.md)
 3. [An exercise catalogue is the shared registry](./docs/adr/0003-exercise-catalogue-as-registry.md)
+4. [Joint constraints are a two-sided model](./docs/adr/0004-joint-constraints-as-a-two-sided-model.md)
 
 ---
 
 ## A note on the catalogue
 
-The shipped `exercises/` entries reflect one working configuration: which lifts are anchors, and
-which are permitted to go to failure. Those are **instance decisions living in shared files** —
-the honest place for them would be the profile. Fork and adjust; the objective fields (`pattern`,
-`primary`, `secondary`, `grip_demand`, `loads_elbow`, `load_increment_kg`) transfer unchanged.
+The objective fields — `pattern`, `primary`, `secondary`, `grip_demand`, `loads_joints`,
+`unilateral`, `load_increment_kg` — are true for everyone and transfer to a fork unchanged.
+
+Two fields are not: `anchor` and `failure_allowed` encode which lifts *this* configuration
+measures progress with, and which it permits to be pushed to failure. Those are **instance
+decisions living in shared files**, and the honest place for them would be the profile. They were
+left in place rather than quietly generalised; adjust them when you fork.
+
+`loads_joints` used to be one of these — it shipped as `loads_elbow`, a boolean that existed
+solely because one athlete had an elbow problem. [ADR 0004](./docs/adr/0004-joint-constraints-as-a-two-sided-model.md)
+separates the exercise property from the personal limitation, which is what makes the catalogue
+shareable at all.

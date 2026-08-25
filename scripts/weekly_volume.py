@@ -9,9 +9,11 @@ It does three jobs:
 
   1. Validates every log against the exercise catalogue (ADR 0003). Unknown slugs and
      malformed front-matter are errors, not warnings.
-  2. Enforces joint constraints mechanically: any set on an exercise flagged
-     loads_elbow: true recorded at RIR 0 is a violation. Safety becomes a checkable
-     property rather than something the planner has to remember.
+  2. Enforces joint constraints mechanically. Each exercise declares which joints
+     it loads (loads_joints); profile/joint-constraints.yaml declares which of the
+     athlete's joints need protecting and how hard they may be pushed (min_rir),
+     plus movements to avoid entirely. A logged set that breaks a rule is reported.
+     Safety becomes a checkable property rather than something a planner remembers.
   3. Reports hard sets per muscle per week against the 10-20 target, and exposures
      per muscle against the target of 2.
 
@@ -38,6 +40,8 @@ SECONDARY_WEIGHT = 0.5    # a set counts half for muscles listed as secondary
 NON_VOLUME_PATTERNS = {"conditioning", "carry", "skill"}
 TARGETS = ROOT / "profile" / "volume-targets.yaml"
 TARGETS_EXAMPLE = ROOT / "profile" / "volume-targets.example.yaml"
+JOINTS = ROOT / "profile" / "joint-constraints.yaml"
+JOINTS_EXAMPLE = ROOT / "profile" / "joint-constraints.example.yaml"
 
 
 def front_matter(path):
@@ -53,6 +57,21 @@ def front_matter(path):
     if not isinstance(data, dict):
         raise ValueError(f"{path.name}: front-matter is not a mapping")
     return data
+
+
+def load_joint_constraints():
+    """Return ({joint: rule}, known_joints). Absent config means no constraints."""
+    path = JOINTS if JOINTS.exists() else JOINTS_EXAMPLE
+    if not path.exists():
+        return {}, set()
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    rules = data.get("constraints") or {}
+    for joint, rule in rules.items():
+        if not isinstance(rule, dict):
+            raise ValueError(f"joint '{joint}': rule must be a mapping")
+        rule.setdefault("min_rir", 0)
+        rule.setdefault("avoid", [])
+    return rules, set(data.get("known_joints") or [])
 
 
 def load_targets():
@@ -105,12 +124,25 @@ def main():
     try:
         catalogue = load_catalogue()
         bands, untracked, exposure_target = load_targets()
+        joint_rules, known_joints = load_joint_constraints()
     except ValueError as exc:
         print(f"CONFIG ERROR: {exc}", file=sys.stderr)
         return 2
+    errors_pre = []
     print(f"catalogue: {len(catalogue)} exercises")
+    if joint_rules:
+        caps = ", ".join(f"{j} (RIR>={r['min_rir']})" for j, r in sorted(joint_rules.items()))
+        print(f"joints:    {caps}")
+    avoided = {slug: j for j, r in joint_rules.items() for slug in r["avoid"]}
 
-    errors = []
+    if known_joints:
+        for slug, meta in catalogue.items():
+            for joint in meta.get("loads_joints") or []:
+                if joint not in known_joints:
+                    errors_pre.append(f"exercises/{slug}.md: unknown joint '{joint}' "
+                                      f"(not in known_joints)")
+
+    errors = list(errors_pre)
     violations = []
     # week -> muscle -> hard sets
     volume = defaultdict(lambda: defaultdict(float))
@@ -141,6 +173,24 @@ def main():
                               f"(add exercises/{slug}.md or fix the log)")
                 continue
             meta = catalogue[slug]
+
+            if slug in avoided:
+                violations.append(
+                    f"{path.name}: {slug} is on the avoid list for "
+                    f"{avoided[slug]} - it should not be prescribed at all")
+
+            loaded = [j for j in (meta.get("loads_joints") or []) if j in joint_rules]
+            for st in ex.get("sets") or []:
+                rir = st.get("rir")
+                if rir is None:
+                    continue
+                for joint in loaded:
+                    floor = joint_rules[joint]["min_rir"]
+                    if rir < floor:
+                        violations.append(
+                            f"{path.name}: {slug} logged at RIR {rir}; it loads the "
+                            f"{joint}, which requires RIR >= {floor}")
+
             if meta.get("pattern") in NON_VOLUME_PATTERNS:
                 continue
 
@@ -152,10 +202,6 @@ def main():
                 if rir is None:
                     errors.append(f"{path.name}: {slug} has a set with no 'rir'")
                     continue
-                if rir == 0 and meta.get("loads_elbow"):
-                    violations.append(
-                        f"{path.name}: {slug} taken to failure (RIR 0) but "
-                        f"loads_elbow is true - see your profile constraints")
                 if rir <= HARD_SET_RIR:
                     for m, w in weighted:
                         volume[week][m] += w

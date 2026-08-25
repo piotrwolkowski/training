@@ -33,8 +33,8 @@ Options considered:
 ## Decision
 
 One file per exercise under `exercises/`, keyed by a canonical slug that both logs and programmes
-reference. Each file carries `pattern`, `primary`, `secondary`, `venue`, `loads_elbow`,
-`unilateral`, and `load_increment_kg`.
+reference. Each file carries `pattern`, `primary`, `secondary`, `venue`, `loads_joints`,
+`grip_demand`, `unilateral`, and `load_increment_kg`.
 
 The athlete does not interact with slugs. They describe sessions in prose; the agent resolves the
 description to a catalogue entry and asks when a description is ambiguous. The catalogue is
@@ -45,9 +45,13 @@ infrastructure for the agent, not friction for the athlete.
 Volume per muscle per week becomes computable rather than estimated, because sets join to muscles
 through the catalogue.
 
-The joint rule becomes mechanical instead of remembered: `loads_elbow: true` combined with a
-prescription at RIR 0 is a detectable contradiction, and `scripts/weekly_volume.py` can check
-for it. Safety moves from vigilance to a property that can be verified.
+The joint rule becomes mechanical instead of remembered: an exercise that loads a constrained
+joint, logged at an intensity the athlete's profile forbids, is a detectable contradiction, and
+`scripts/weekly_volume.py` checks for it. Safety moves from vigilance to a property that can be
+verified.
+
+This originally shipped as a single `loads_elbow` boolean, which fused an exercise property with a
+personal limitation. [ADR 0004](./0004-joint-constraints-as-a-two-sided-model.md) separates them.
 
 The future app inherits its exercise picker as data rather than as a build task.
 

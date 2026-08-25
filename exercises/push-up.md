@@ -5,7 +5,7 @@ pattern: horizontal-push
 primary: [chest]
 secondary: [front-delt, triceps, core]
 venue: [gym, home]
-loads_elbow: true
+loads_joints: [elbow, shoulder, wrist]
 grip_demand: low
 unilateral: false
 load_increment_kg: 0.0
@@ -15,4 +15,4 @@ failure_allowed: false
 
 # Push-up
 
-loads_elbow - never to failure. Progressed by reps, tempo and elevation rather than load.
+Loads the elbow - failure permitted only if the athlete profile allows it. Progressed by reps, tempo and elevation rather than load.

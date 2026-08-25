@@ -5,7 +5,7 @@ pattern: isolation
 primary: [calves]
 secondary: []
 venue: [gym]
-loads_elbow: false
+loads_joints: []
 grip_demand: low
 unilateral: false
 load_increment_kg: 5.0

@@ -5,7 +5,7 @@ pattern: skill
 primary: []
 secondary: []
 venue: [mat]
-loads_elbow: true
+loads_joints: [elbow, shoulder, knee, lower-back]
 grip_demand: high
 unilateral: false
 load_increment_kg: 0.0
@@ -23,6 +23,6 @@ its intensity varies session to session.
 Recorded with `duration_min` and `intensity` (1-5), because drilling and hard rolling are barely
 the same activity in recovery terms.
 
-`loads_elbow: true` - gripping and joint locks load the elbow in ways nobody programmed. Where
+Loads the elbow - gripping and joint locks load the elbow in ways nobody programmed. Where
 an athlete profile carries an elbow constraint, mat sessions belong in the same picture as
 pressing volume, not outside it.

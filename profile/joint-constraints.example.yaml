@@ -1,0 +1,71 @@
+# Joint constraints
+#
+# Two halves, deliberately separate:
+#
+#   exercises/*.md   loads_joints: [knee, hip]   ← objective. Which joints this
+#                                                  exercise puts under meaningful
+#                                                  load. True for everyone.
+#   this file        knee: {min_rir: 2}          ← personal. Which of your joints
+#                                                  need protecting, and how much.
+#
+# scripts/weekly_volume.py joins the two and reports a violation whenever a logged
+# set breaks one of your rules. That turns joint safety from something a planner has
+# to remember into something a script can check.
+#
+# Copy to joint-constraints.yaml and edit. That file is gitignored.
+# An empty `constraints:` block is valid and means no restrictions.
+
+# The vocabulary. A loads_joints entry outside this list is flagged as a typo.
+known_joints: [elbow, shoulder, wrist, knee, hip, lower-back, neck, ankle]
+
+constraints:
+
+  # ─── Example: an elbow that dislikes end-range load ──────────────────────
+  # elbow:
+  #   reason: Old fracture; forearm rotation restricted.
+  #   min_rir: 1              # never taken to failure — always leave a rep
+  #   avoid: [chin-up]        # slugs never to be prescribed, at any intensity
+  #   note: >
+  #     Eases as load is worked up within a session, so this is a load-tolerance
+  #     problem. Graded exposure is the treatment; avoidance makes it worse.
+
+  # ─── Example: knees ─────────────────────────────────────────────────────
+  # knee:
+  #   reason: Patellar tendinopathy; painful at depth under load.
+  #   min_rir: 2              # stop further short than for a healthy joint
+  #   avoid: [leg-extension]  # open-chain knee extension is the usual offender
+  #   note: >
+  #     Tendons respond to slow, heavy, controlled work and dislike bouncing and
+  #     plyometrics. Prefer controlled tempo over more sets.
+
+  # ─── Example: lower back ────────────────────────────────────────────────
+  # lower-back:
+  #   reason: Disc history; provoked by loaded spinal flexion.
+  #   min_rir: 2
+  #   avoid: [barbell-deadlift, kb-swing]
+  #   note: >
+  #     Fatigue is what breaks position, and position is what hurts backs. This is
+  #     why min_rir matters more here than anywhere else — the last grinding rep is
+  #     the one where the spine rounds. Prefer chest-supported rowing and hip
+  #     thrusts over free hinging.
+
+  # ─── Example: shoulders ─────────────────────────────────────────────────
+  # shoulder:
+  #   reason: Impingement in overhead and wide-grip pressing.
+  #   min_rir: 1
+  #   avoid: []
+  #   note: >
+  #     Usually a range-of-motion and grip problem rather than a load problem.
+  #     Neutral grips and a narrower press path often fix it without dropping load.
+  #     Keep rear delt and external rotation volume high regardless.
+
+# ─── How to choose min_rir ─────────────────────────────────────────────────
+#
+#   0   no constraint — failure is fine
+#   1   leave a rep. For a joint that tolerates load but dislikes maximal effort.
+#   2   leave two. For a joint where fatigue changes technique — most backs and
+#       most tendon problems.
+#   3+  effectively "train it, never push it". Reasonable while rehabbing.
+#
+# Setting min_rir does not make an exercise forbidden. It caps how hard it is
+# taken. Use `avoid` for movements that should not appear at all.

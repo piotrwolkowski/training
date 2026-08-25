@@ -5,7 +5,7 @@ pattern: carry
 primary: [core]
 secondary: [forearms, traps]
 venue: [gym, home]
-loads_elbow: false
+loads_joints: [lower-back]
 grip_demand: high
 unilateral: false
 load_increment_kg: 4.0

@@ -5,7 +5,7 @@ pattern: horizontal-push
 primary: [chest]
 secondary: [front-delt, triceps]
 venue: [gym]
-loads_elbow: true
+loads_joints: [elbow, shoulder]
 grip_demand: moderate
 unilateral: false
 load_increment_kg: 2.0

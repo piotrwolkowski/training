@@ -5,7 +5,7 @@ pattern: isolation
 primary: [rear-delt]
 secondary: []
 venue: [gym]
-loads_elbow: false
+loads_joints: [shoulder]
 grip_demand: low
 unilateral: false
 load_increment_kg: 1.0

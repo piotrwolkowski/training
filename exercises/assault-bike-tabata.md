@@ -5,7 +5,7 @@ pattern: conditioning
 primary: [cardiovascular]
 secondary: [quads, hamstrings]
 venue: [gym]
-loads_elbow: false
+loads_joints: []
 grip_demand: low
 unilateral: false
 load_increment_kg: 0.0
