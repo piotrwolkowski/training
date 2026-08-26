@@ -71,6 +71,7 @@ def load_joint_constraints():
             raise ValueError(f"joint '{joint}': rule must be a mapping")
         rule.setdefault("min_rir", 0)
         rule.setdefault("avoid", [])
+        rule.setdefault("allow_failure", [])
     return rules, set(data.get("known_joints") or [])
 
 
@@ -185,6 +186,8 @@ def main():
                 if rir is None:
                     continue
                 for joint in loaded:
+                    if slug in joint_rules[joint]["allow_failure"]:
+                        continue
                     floor = joint_rules[joint]["min_rir"]
                     if rir < floor:
                         violations.append(

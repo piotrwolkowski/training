@@ -59,7 +59,14 @@ constraints:
 ```
 
 `min_rir` is the floor for any set on an exercise loading that joint; `avoid` lists movements that
-should never be prescribed at all. A `known_joints` vocabulary catches typos, so `knees` is an
+should never be prescribed at all; `allow_failure` exempts named movements from that joint's floor.
+
+That last field earns its place because **a joint can be loaded by a movement without being what
+limits it.** A pull-up loads the elbow, but the lats and biceps fail first, so a set taken to
+failure never puts the elbow under maximal stress. Capping pull-ups protects nothing; capping
+presses and curls protects something real. The exemption lives in the profile rather than the
+catalogue because which movements are safe to fail is a fact about *this athlete's joint*, not
+about the exercise. A `known_joints` vocabulary catches typos, so `knees` is an
 error rather than a silently unenforced rule.
 
 The validator joins the two. Neither half means anything alone, which is the point.
@@ -77,6 +84,12 @@ ones.
 An exercise can be constrained through more than one joint at once, and each is reported
 separately — a squat under both knee and lower-back constraints produces two findings, which is
 correct, because the reasons differ.
+
+The exemption list is also the model's sharpest edge. An exception added from evidence — a
+movement observed repeatedly not to provoke the joint — makes the check more trustworthy. An
+exception added to silence an inconvenient warning quietly disables the safety property while
+leaving the reassuring output intact. The distinction is invisible in the file, so the `reason`
+and `note` fields are not decoration.
 
 The cost is a judgement call now baked into the catalogue: **which joints count as "meaningfully
 loaded"**. Tag too few and real risk goes unflagged; tag too many and the validator cries wolf

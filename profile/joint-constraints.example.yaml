@@ -25,6 +25,8 @@ constraints:
   #   reason: Old fracture; forearm rotation restricted.
   #   min_rir: 1              # never taken to failure — always leave a rep
   #   avoid: [chin-up]        # slugs never to be prescribed, at any intensity
+  #   allow_failure:          # slugs exempt from min_rir for THIS joint
+  #     - pull-up             #   the elbow is not what fails here
   #   note: >
   #     Eases as load is worked up within a session, so this is a load-tolerance
   #     problem. Graded exposure is the treatment; avoidance makes it worse.
@@ -69,3 +71,19 @@ constraints:
 #
 # Setting min_rir does not make an exercise forbidden. It caps how hard it is
 # taken. Use `avoid` for movements that should not appear at all.
+#
+# ─── allow_failure: when the constrained joint is not what fails ────────────
+#
+# A joint can be loaded by a movement without being the structure that limits it.
+# On a pull-up the elbow is loaded, but the lats and biceps fail first — so a set
+# taken to failure never puts the elbow under maximal stress. The cap is correct
+# for pressing and for curls, where the elbow IS the working joint, and wrong for
+# compound pulling.
+#
+# `allow_failure` exempts named movements from that joint's min_rir. It lives here
+# rather than in the catalogue on purpose: which movements are safe to fail is a
+# fact about YOUR joint, not about the exercise.
+#
+# Use it sparingly and only from evidence. A check that fires on things that are
+# fine gets ignored, and then it protects nothing — but an exception added to
+# silence an inconvenient warning is worse.
