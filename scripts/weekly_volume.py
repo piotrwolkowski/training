@@ -37,7 +37,7 @@ LOGS = ROOT / "logs"
 
 HARD_SET_RIR = 3          # a working set at RIR <= 3 counts toward volume
 SECONDARY_WEIGHT = 0.5    # a set counts half for muscles listed as secondary
-NON_VOLUME_PATTERNS = {"conditioning", "carry", "skill"}
+NON_VOLUME_PATTERNS = {"conditioning", "carry", "skill", "recovery"}
 TARGETS = ROOT / "profile" / "volume-targets.yaml"
 TARGETS_EXAMPLE = ROOT / "profile" / "volume-targets.example.yaml"
 JOINTS = ROOT / "profile" / "joint-constraints.yaml"
