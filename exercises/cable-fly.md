@@ -1,6 +1,6 @@
 ---
 slug: cable-fly
-name: Cable fly or pec deck
+name: Cable, pec deck or machine fly
 pattern: isolation
 primary: [chest]
 secondary: []
@@ -16,5 +16,5 @@ failure_allowed: true
 
 # Cable fly or pec deck
 
-Failure permitted, and this is the designated Yates finisher for chest - isolated, elbow fixed,
+Covers any fixed-elbow fly where resistance peaks at the squeeze: cable crossover, pec deck with forearm pads, or a seated machine fly with the arms extended and handles gripped. Failure permitted, and this is the designated failure movement for chest - isolated, elbow fixed,
 no pressing demand.
