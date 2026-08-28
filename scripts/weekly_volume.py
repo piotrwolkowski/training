@@ -145,6 +145,7 @@ def main():
 
     errors = list(errors_pre)
     violations = []
+    symptoms = []
     # week -> muscle -> hard sets
     volume = defaultdict(lambda: defaultdict(float))
     # week -> muscle -> set of session ids
@@ -166,6 +167,12 @@ def main():
             continue
         week = iso_week(date)
         sessions += 1
+
+        for sym in data.get("symptoms") or []:
+            if not isinstance(sym, dict) or "site" not in sym:
+                errors.append(f"{path.name}: symptom entry needs a 'site'")
+                continue
+            symptoms.append((date, sym))
 
         for ex in data.get("exercises") or []:
             slug = ex.get("name") or ex.get("slug")
@@ -211,6 +218,17 @@ def main():
                         exposures[week][m].add(path.stem)
 
     print(f"logs:      {sessions} sessions\n")
+
+    if symptoms:
+        print("SYMPTOMS (most recent first)")
+        for date, sym in sorted(symptoms, key=lambda x: str(x[0]), reverse=True)[:10]:
+            sev = sym.get("severity")
+            sev = f" severity {sev}/5" if sev is not None else ""
+            side = f" ({sym['side']})" if sym.get("side") else ""
+            print(f"  {date}  {sym['site']}{side}{sev}")
+            if sym.get("note"):
+                print(f"              {sym['note']}")
+        print()
 
     for exc in errors:
         print(f"ERROR      {exc}", file=sys.stderr)
