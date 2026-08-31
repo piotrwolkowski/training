@@ -16,7 +16,7 @@ an **anchor**.
 Where a session happens, and therefore what equipment is available. Two values:
 
 - **gym** — mid-to-well equipped: barbells, dumbbells, kettlebells, machines, cables.
-- **home** — 16 kg and 20 kg kettlebells, and a skipping rope.
+- **home** — 16 kg and 24 kg kettlebells, and a skipping rope.
 - **gym-limited** — a gym with partial equipment. Anchors may or may not be possible; check
   before assuming.
 - **mat** — grappling or martial arts training. Not a lifting venue; carries no anchors and no

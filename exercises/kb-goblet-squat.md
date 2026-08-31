@@ -8,12 +8,12 @@ venue: [gym, home]
 loads_joints: [knee, hip]
 grip_demand: moderate
 unilateral: false
-load_increment_kg: 4.0
+load_increment_kg: 8.0
 anchor: false
 failure_allowed: true
 ---
 
 # Kettlebell goblet squat
 
-Home-viable but load-capped at 20 kg - use for high reps or as a pair partner, never as a
-progression vehicle.
+Home-viable but capped by the heaviest bell available - use for high reps or as a pair partner,
+never as a progression vehicle.

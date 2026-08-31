@@ -8,7 +8,7 @@ venue: [gym, home]
 loads_joints: [elbow, shoulder, lower-back]
 grip_demand: high
 unilateral: true
-load_increment_kg: 4.0
+load_increment_kg: 8.0
 anchor: false
 failure_allowed: false
 ---
